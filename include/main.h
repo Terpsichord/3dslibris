@@ -22,7 +22,8 @@
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
-#include "nds.h"
+#include "3ds.h"
+#include "citro2d.h"
 #include "splash.h"
 
 #define MARGINLEFT 12
@@ -37,8 +38,10 @@
 #define SPLASH_LEFT 28
 #define SPLASH_TOP 44
 
-#define LOGFILEPATH "dslibris.log"
-#define PREFSPATH "dslibris.xml"
+#define APPPATH "/3ds/3dslibris/"
+
+#define LOGFILEPATH APPPATH "dslibris.log"
+#define PREFSPATH APPPATH "dslibris.xml"
 
 #define FONTREGULARFILE "LiberationSerif-Regular.ttf"
 #define FONTBOLDFILE "LiberationSerif-Bold.ttf"

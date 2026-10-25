@@ -5,7 +5,7 @@
 #include <vector>
 #include "sys/stat.h"
 #include "sys/time.h"
-#include "nds.h"
+#include "3ds.h"
 #include "main.h"
 #include "app.h"
 #include "book.h"
@@ -240,8 +240,6 @@ void Prefs::Apply() {
 //! \return Error code.
 int Prefs::Write()
 {
-	if (app->melonds) return 0;
-
 	int err = 0;
 	int invert = 0;
 

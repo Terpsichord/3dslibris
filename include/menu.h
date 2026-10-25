@@ -1,6 +1,6 @@
 #pragma once
 /*  Abstract base for Book, Pref and Font menus. */
-#include <nds.h>
+#include <3ds.h>
 #include <vector>
 
 class Menu {

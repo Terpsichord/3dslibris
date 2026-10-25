@@ -1,7 +1,7 @@
 #pragma once
 
 #include <map>
-#include <nds.h>
+#include <3ds.h>
 #include <string>
 
 #include "ft2build.h"

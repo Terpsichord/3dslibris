@@ -2,7 +2,7 @@
 
 #include <string>
 #include <list>
-#include <nds.h>
+#include <3ds.h>
 #include <vector>
 #include "app.h"
 #include "page.h"

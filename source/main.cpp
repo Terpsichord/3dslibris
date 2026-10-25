@@ -23,14 +23,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #include "main.h"
 
 #include "dirent.h"
-#include "fat.h"
-#include "nds.h"
+#include "3ds.h"
 
 #include "app.h"
 #include "book.h"
 #include "button.h"
 #include "text.h"
-#include "expat.h"
 #include "parse.h"
 #include "version.h"
 
@@ -57,11 +55,6 @@ int halt(const char *msg, int vblanks) {
 
 int main(void)
 {
-	defaultExceptionHandler();
-	// consoleDemoInit();
-	// consoleDebugInit(DebugDevice_NOCASH);
-	// fprintf(stderr, "dslibris %s\n", VERSION);
-
 	if (!fatInitDefault())
 		halt("[FAIL] filesystem\n");
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <expat.h>
-#include <nds.h>
+#include <3ds.h>
 #include "text.h"
 
 #define PAGEBUFSIZE 2048

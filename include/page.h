@@ -25,7 +25,7 @@ A Book contains a vector of Pages.
 */
 #pragma once
 
-#include <nds.h>
+#include <3ds.h>
 #include "book.h"
 #include "text.h"
 

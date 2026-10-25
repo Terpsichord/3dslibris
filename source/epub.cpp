@@ -22,7 +22,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 #include "epub.h"
 
-#include <nds.h>
 #include <string.h>
 #include <stdio.h>
 #include <iostream>
@@ -30,7 +29,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #include "book.h"
 #include "main.h"
 #include "parse.h"
-#include "expat.h"
 #include "zlib.h"
 #include "unzip.h"
 

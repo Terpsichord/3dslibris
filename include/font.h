@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nds.h>
+#include <3ds.h>
 #include <string>
 #include <vector>
 #include "button.h"

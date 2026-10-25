@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #include <sstream>
 #include <sys/param.h>
 
-#include "nds.h"
-#include "fat.h"
+#include "3ds.h"
 #include "string.h"
 
 #include "app.h"
@@ -664,6 +663,9 @@ void Text::PrintString(const char *s) {
 
 void Text::PrintString(const char *s, u8 style) {
 	//! Render a character string starting at the pen position.
+
+    C2D_DrawText()
+
 	PrintString(s, GetFace(style));
 }
 

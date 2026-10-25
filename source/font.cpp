@@ -1,8 +1,6 @@
 #include "font.h"
 
 #include <sys/dir.h>
-#include <fat.h>
-#include <nds.h>
 #include <string>
 #include <vector>
 

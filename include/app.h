@@ -95,7 +95,6 @@ public:
 	u8 brightness;   //! DISABLED. 4 levels for the Lite.
 	u8 mode; 	     //! Current mode (browser, prefs, book, font)
 	std::string fontdir;  //! Directory to search for font files
-	bool melonds;    //! Are we running in melonDS?
 
 	//! key functions are remappable to support screen flipping.
 	struct {
@@ -130,7 +129,6 @@ public:
 	class FontMenu *fontmenu;  //! Font selection menu.
 
 	// app.cpp
-	void CycleBrightness();
 	void PrintStatus(const char *msg);
 	void PrintStatus(std::string msg);
 	int  Run(void);

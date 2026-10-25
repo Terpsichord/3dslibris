@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #include <sys/stat.h>
 #include <unistd.h>
 #include <algorithm>   // for std::sort
-#include <fat.h>
 
 #include "main.h"
 #include "parse.h"
@@ -42,16 +41,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 App::App()
 {
-	melonds = false;
-	FILE *fd = fopen("/melonds.txt", "r");
-	if (fd)
-	{
-		fclose(fd);
-		melonds = true;
-	}
+    osSetSpeedupEnable(true);
 
-	fontdir = std::string("font");
-	bookdir = std::string("book");
+    fontdir = std::string(APPPATH "font");
+	bookdir = std::string(APPPATH "book");
 	bookcount = 0;
 	bookselected = NULL;
 	bookcurrent = NULL;
@@ -152,11 +145,10 @@ int App::Run(void)
 		OpenBook();
 	}
 
-	keysSetRepeat(60,2);
-	while (pmMainLoop())
+	while (aptMainLoop())
 	{
-		swiWaitForVBlank();
-		scanKeys();
+		gspWaitForVBlank();
+		hidScanInput();
 
 		switch (mode) {
 			case APP_MODE_BOOK:
@@ -188,18 +180,6 @@ int App::Run(void)
 		}
 	}
 	return 0;
-}
-
-void App::SetBrightness(u8 b)
-{
-	brightness = b % 4;
-	setBrightness(3, brightness);
-}
-
-void App::CycleBrightness()
-{
-	++brightness %= 4;
-	SetBrightness(brightness);
 }
 
 int App::FindBooks() {
@@ -292,66 +272,66 @@ void App::UpdateClock()
 	ts->SetScreen(screen);
 }
 
-void App::SetOrientation(bool turned_right)
-{
-	s16 s;
-	s16 c;
-	if(turned_right)
-	{
-		s = 1 << 8;
-		c = 0;
-		REG_BG3X = 191 << 8;
-		REG_BG3Y = 0 << 8;
-		REG_BG3X_SUB = 191 << 8;
-		REG_BG3Y_SUB = 0 << 8;
-		ts->screenright = (u16*)BG_BMP_RAM_SUB(0);
-		ts->screenleft = (u16*)BG_BMP_RAM(0);
-		orientation = true;
-		// TODO put this in user coords
-		key.down = KEY_UP;
-		key.up = KEY_DOWN;
-		key.left = KEY_RIGHT;
-		key.right = KEY_LEFT;
-		key.l = KEY_R;
-		key.r = KEY_L;
-	}
-	else
-	{
-		s = -1 << 8;
-		c = 0;
-		REG_BG3X = 0 << 8;
-		REG_BG3Y = 255 << 8;
-		REG_BG3X_SUB = 0 << 8;
-		REG_BG3Y_SUB = 255 << 8;
-		ts->screenright = (u16*)BG_BMP_RAM_SUB(0);
-		ts->screenleft = (u16*)BG_BMP_RAM(0);
-		orientation = false;
-		// TODO put this in user coords
-		key.down = KEY_DOWN;
-		key.up = KEY_UP;
-		key.left = KEY_LEFT;
-		key.right = KEY_RIGHT;
-		key.l = KEY_L;
-		key.r = KEY_R;
-	}
-	REG_BG3PA = c;
-	REG_BG3PB = -s;
-	REG_BG3PC = s;
-	REG_BG3PD = c;
-	REG_BG3PA_SUB = c;
-	REG_BG3PB_SUB = -s;
-	REG_BG3PC_SUB = s;
-	REG_BG3PD_SUB = c;
-}
+// TODO: implement this
+//void App::SetOrientation(bool turned_right)
+//{
+//	s16 s;
+//	s16 c;
+//	if(turned_right)
+//	{
+//		s = 1 << 8;
+//		c = 0;
+//		REG_BG3X = 191 << 8;
+//		REG_BG3Y = 0 << 8;
+//		REG_BG3X_SUB = 191 << 8;
+//		REG_BG3Y_SUB = 0 << 8;
+//		ts->screenright = (u16*)BG_BMP_RAM_SUB(0);
+//		ts->screenleft = (u16*)BG_BMP_RAM(0);
+//		orientation = true;
+//		// TODO put this in user coords
+//		key.down = KEY_UP;
+//		key.up = KEY_DOWN;
+//		key.left = KEY_RIGHT;
+//		key.right = KEY_LEFT;
+//		key.l = KEY_R;
+//		key.r = KEY_L;
+//	}
+//	else
+//	{
+//		s = -1 << 8;
+//		c = 0;
+//		REG_BG3X = 0 << 8;
+//		REG_BG3Y = 255 << 8;
+//		REG_BG3X_SUB = 0 << 8;
+//		REG_BG3Y_SUB = 255 << 8;
+//		ts->screenright = (u16*)BG_BMP_RAM_SUB(0);
+//		ts->screenleft = (u16*)BG_BMP_RAM(0);
+//		orientation = false;
+//		// TODO put this in user coords
+//		key.down = KEY_DOWN;
+//		key.up = KEY_UP;
+//		key.left = KEY_LEFT;
+//		key.right = KEY_RIGHT;
+//		key.l = KEY_L;
+//		key.r = KEY_R;
+//	}
+//	REG_BG3PA = c;
+//	REG_BG3PB = -s;
+//	REG_BG3PC = s;
+//	REG_BG3PD = c;
+//	REG_BG3PA_SUB = c;
+//	REG_BG3PB_SUB = -s;
+//	REG_BG3PC_SUB = s;
+//	REG_BG3PD_SUB = c;
+//}
 
 void App::InitScreens()
 {
-	videoSetMode(MODE_5_2D);
-	vramSetBankA(VRAM_A_MAIN_BG);
-	bgInit(3, BgType_Bmp16, BgSize_B16_256x256, 0,0);
-	videoSetModeSub(MODE_5_2D);
-	vramSetBankC(VRAM_C_SUB_BG);
-	bgInitSub(3, BgType_Bmp16, BgSize_B16_256x256, 0,0);
+    gfxInitDefault();
+    C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
+    C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
+    C2D_Prepare();
+
 	ts->SetScreen(ts->screenright);
 	ts->ClearScreen();
 	ts->SetScreen(ts->screenleft);

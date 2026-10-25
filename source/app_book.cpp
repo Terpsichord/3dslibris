@@ -8,10 +8,6 @@
 #include <sys/dir.h>
 #include <sys/stat.h>
 
-#include <expat.h>
-
-#include <fat.h>
-#include <nds/bios.h>
 
 #include "main.h"
 #include "parse.h"
